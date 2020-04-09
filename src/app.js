@@ -12,7 +12,7 @@ app.use(cors());
 const repositories = [];
 
 app.get("/repositories", (request, response) => {
-  return response.status(200).send(repositories);
+  return response.status(200).json({ repositories });
 });
 
 app.post("/repositories", (request, response) => {
@@ -28,7 +28,7 @@ app.post("/repositories", (request, response) => {
 
   repositories.push(newProject);
 
-  return response.status(201).send(newProject);
+  return response.status(201).json(newProject);
 });
 
 app.put("/repositories/:id", (request, response) => {
@@ -38,7 +38,7 @@ app.put("/repositories/:id", (request, response) => {
   const index = repositories.findIndex((project) => project.id === id);
 
   if (index < 0) {
-    return res.status(404).send("Project not found");
+    return res.status(404).json({ message: "Project not found" });
   }
 
   repositories[index] = {
@@ -49,7 +49,7 @@ app.put("/repositories/:id", (request, response) => {
     likes: repositories[index].likes,
   };
 
-  return response.status(200).send(repositories[index]);
+  return response.status(200).json(repositories[index]);
 });
 
 app.delete("/repositories/:id", (req, res) => {
