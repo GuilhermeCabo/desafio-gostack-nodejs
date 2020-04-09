@@ -52,8 +52,17 @@ app.put("/repositories/:id", (request, response) => {
   return response.status(200).json(repositories[index]);
 });
 
-app.delete("/repositories/:id", (req, res) => {
-  // TODO
+app.delete("/repositories/:id", (request, response) => {
+  const { id } = request.params;
+  const index = repositories.findIndex((project) => project.id === id);
+
+  if (index < 0) {
+    return response.status(404).json({ message: "Project not found" });
+  }
+
+  repositories.splice(index, 1);
+
+  return response.status(204).send();
 });
 
 app.post("/repositories/:id/like", (request, response) => {
