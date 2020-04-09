@@ -32,7 +32,24 @@ app.post("/repositories", (request, response) => {
 });
 
 app.put("/repositories/:id", (request, response) => {
-  // TODO
+  const { title, url, techs } = request.body;
+  const { id } = request.params;
+
+  const index = repositories.findIndex((project) => project.id === id);
+
+  if (index < 0) {
+    return res.status(404).send("Project not found");
+  }
+
+  repositories[index] = {
+    id,
+    title,
+    url,
+    techs,
+    likes: repositories[index].likes,
+  };
+
+  return response.status(200).send(repositories[index]);
 });
 
 app.delete("/repositories/:id", (req, res) => {
