@@ -12,7 +12,7 @@ app.use(cors());
 const repositories = [];
 
 app.get("/repositories", (request, response) => {
-  return response.status(200).json({ repositories });
+  return response.status(200).json(repositories);
 });
 
 app.post("/repositories", (request, response) => {
@@ -38,7 +38,7 @@ app.put("/repositories/:id", (request, response) => {
   const index = repositories.findIndex((project) => project.id === id);
 
   if (index < 0) {
-    return res.status(400).json({ message: "Project not found" });
+    return response.status(400).json({ message: "Project not found" });
   }
 
   repositories[index] = {
